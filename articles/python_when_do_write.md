@@ -2,7 +2,7 @@
 title: "python の write 逐一書くか、まとめて書くか"
 emoji: "🐍"
 type: "tech" # tech: 技術記事 / idea: アイデア
-topics: []
+topics: ["Python"]
 published: false
 ---
 
