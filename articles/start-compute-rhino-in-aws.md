@@ -27,16 +27,16 @@ AWS EC2でのWindows Server 2019のインスタンスの作り方はいろいろ
 上記記事にもありますが、外部からアクセスできるようにするために以下をしてください。
 
 1. 管理者でPowerShellを起動して以下を実行すると IIS をインストールし、自動で 80 と 443 が開かれる。
-    ```bash:
+    ```bash
     Install-WindowsFeature -name Web-Server -IncludeManagementTools
     ```
 2. URLの設定をします
    1. HTTPの場合:
-      ```bash:
+      ```bash
       netsh http add urlacl url="http://+:80/" user="Everyone"
       ```
    2. HTTPSの場合:
-      ```bash:
+      ```bash
       netsh http add urlacl url="https://+:443/" user="Everyone"
       ```
 
@@ -75,7 +75,7 @@ Core-Hourなので課金形態は例えば以下のようになります。
 3. PowerShell を起動してCompute.Rhino3dのフォルダ内にある compute.frontend.exe を実行する
 4. ブラウザーで http://localhost/version にアクセスして例えば以下のようにバージョンが表示されれば問題なく実行されています
 
-    ```json:
+    ```json
     {
       "rhino":"7.0.20259.15365",
       "compute":"1.0.0.493",
@@ -90,7 +90,7 @@ Core-Hourなので課金形態は例えば以下のようになります。
 
 発行したトークンとを実行しているアドレスをRhinoCompute.csの以下の位置に入れてください。ローカルで実行しているならばWebAdressは http://localhost:8081 になります。
 
-```cs: RhinoCompute.cs
+```cs
 namespace Rhino.Compute
 {
     public static class ComputeServer
