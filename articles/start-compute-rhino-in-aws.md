@@ -66,7 +66,7 @@ Core-Hourなので課金形態は例えば以下のようになります。
 5. コア時間課金を有効にして保存する
 
 
-## Compute.Rhino3dの実行環境構築
+## 実行環境構築
 
 公式のドキュメント [Installation](https://github.com/mcneel/compute.rhino3d/blob/master/docs/installation.md)
 
@@ -129,4 +129,11 @@ namespace Rhino.Compute
 
 cube_sphere_difference.obj ではbrepのメッシュ化とブーリアン演算をおこなった結果として以下のようなになっています。この機能のどちらも高級な関数を使うためCompute.Rhino3dでないとできない処理です。
 
-![](https://storage.googleapis.com/zenn-user-upload/q4908ig96mxxu4es1yy3k95lm2ee =250x)
+![](https://storage.googleapis.com/zenn-user-upload/q4908ig96mxxu4es1yy3k95lm2ee =250px)
+
+
+# まとめ
+
+この記事では、AWSでのCompute.Rhino3dの使い方について解説しました。AWS上でRhinoの高級な関数が実行できることはとても魅力的ではないでしょうか。
+
+今回はC#環境での実行でしたが、PythonやJavaScriptのCompute.Rhino3dもあるので自分のやりたいことに合った言語を使って、Compute.Rhino3dを満喫しましょう。
