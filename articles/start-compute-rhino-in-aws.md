@@ -86,7 +86,7 @@ Core-Hourなので課金形態は例えば以下のようになります。
     ```
 この手順はAWSに限らずローカル（windows10）でテストする場合なども同じです。
 
-# サンプルを実行
+# サンプルを実行！！
 
 ## トークン取得
 
@@ -104,7 +104,7 @@ mcneelのGitHubからサンプルファイルをクローンして使います�
 git clone https://github.com/mcneel/compute.rhino3d-samples.git
 ```
 
-## 実行！！！
+## 実行
 
 Visual Studio などでSampleフォルダ内の RhinoComputeSamples.sln を開いて発行したトークンとcompute.rhinoのアドレスを、compute.rhino3d-samples/samples/RhinoComputeフォルダ内にある RhinoCompute.csの以下の位置に入れてください。ローカルで実行しているならばWebAdressは http://localhost:8081 になります。
 
@@ -129,11 +129,21 @@ namespace Rhino.Compute
 
 cube_sphere_difference.obj ではbrepのメッシュ化とブーリアン演算をおこなった結果として以下のようなになっています。この機能のどちらも高級な関数を使うためCompute.Rhino3dでないとできない処理です。
 
-![](https://storage.googleapis.com/zenn-user-upload/q4908ig96mxxu4es1yy3k95lm2ee =250px)
+![](https://storage.googleapis.com/zenn-user-upload/q4908ig96mxxu4es1yy3k95lm2ee)
 
+# Next Step
+
+今回はC#環境での実行でしたが、PythonやJavaScriptのCompute.Rhino3dもあるので自分のやりたいことに合った言語を使って、Compute.Rhino3dを満喫しましょう。
+
+jsは 以下のチュートリアルがおすすめです。
+
+[compute.rhino3d.appserver](https://github.com/mcneel/compute.rhino3d.appserver)
+
+[2020 Digital Evolution Pre-Lab Workshop: Hosted by Steve Baer of McNeel](https://vimeo.com/442079095)
 
 # まとめ
 
 この記事では、AWSでのCompute.Rhino3dの使い方について解説しました。AWS上でRhinoの高級な関数が実行できることはとても魅力的ではないでしょうか。
+計算自体はサーバーで行うため、スマフォのような端末でもRhinoの幾何計算の結果を取得できるのが面白いところだと思っています。
 
-今回はC#環境での実行でしたが、PythonやJavaScriptのCompute.Rhino3dもあるので自分のやりたいことに合った言語を使って、Compute.Rhino3dを満喫しましょう。
+あなたもAWSそしてCompute.Rhino3dへの重課金でのパケ死に気を付けてクラウドなRhino3dを楽しみましょう！！！
