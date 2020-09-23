@@ -129,4 +129,4 @@ namespace Rhino.Compute
 
 cube_sphere_difference.obj ではbrepのメッシュ化とブーリアン演算をおこなった結果として以下のようなになっています。この機能のどちらも高級な関数を使うためCompute.Rhino3dでないとできない処理です。
 
-![cube_sphere_difference](https://github.com/hrntsm/zenn_articles/blob/master/image/cube_sphere_difference.jpg?raw=true)
+![](https://storage.googleapis.com/zenn-user-upload/q4908ig96mxxu4es1yy3k95lm2ee =250x)
