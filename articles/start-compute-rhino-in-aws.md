@@ -70,7 +70,9 @@ Core-Hourなので課金形態は例えば以下のようになります。
 
 公式のドキュメント [Installation](https://github.com/mcneel/compute.rhino3d/blob/master/docs/installation.md)
 
-1. ここから [最新のビルド](https://ci.appveyor.com/api/projects/mcneel/compute-rhino3d/artifacts/compute.zip?branch=master&pr=false) のデータをダウンロードして回答する
+対象の環境で以下を行います。AWSでやるならばそのWindows Server内で行ってください。
+
+1. ここから [最新のビルド](https://ci.appveyor.com/api/projects/mcneel/compute-rhino3d/artifacts/compute.zip?branch=master&pr=false) のデータをダウンロードして解凍する
 2. RhinoWIP(Rhino7)を少なくとも1回起動する（ライセンス認証するため）
 3. PowerShell を起動してCompute.Rhino3dのフォルダ内にある compute.frontend.exe を実行する
 4. ブラウザーで http://localhost/version にアクセスして例えば以下のようにバージョンが表示されれば問題なく実行されています
@@ -86,17 +88,33 @@ Core-Hourなので課金形態は例えば以下のようになります。
 
 # サンプルを実行
 
-実行するためにはCompute.Rhino3dのAuthTokenが必要になるため、それをまず設定します。次のURLからトークンを発行してください。https://www.rhino3d.com/compute/login
+## トークン取得
 
-発行したトークンとを実行しているアドレスをRhinoCompute.csの以下の位置に入れてください。ローカルで実行しているならばWebAdressは http://localhost:8081 になります。
+実行するためにはCompute.Rhino3dのAuthTokenが必要になるため、それをまず設定します。次のURLからトークンを発行してください。トークンの発行にはRhinoのアカウントが必要になります。
+
+https://www.rhino3d.com/compute/login
+
+## サンプルファイルを取得
+
+mcneelのGitHubからサンプルファイルをクローンして使います。
+
+[compute.rhino3d-samples](https://github.com/mcneel/compute.rhino3d-samples)
+
+```bash
+git clone https://github.com/mcneel/compute.rhino3d-samples.git
+```
+
+## 実行！！！
+
+Visual Studio などでSampleフォルダ内の RhinoComputeSamples.sln を開いて発行したトークンとcompute.rhinoのアドレスを、compute.rhino3d-samples/samples/RhinoComputeフォルダ内にある RhinoCompute.csの以下の位置に入れてください。ローカルで実行しているならばWebAdressは http://localhost:8081 になります。
 
 ```cs
 namespace Rhino.Compute
 {
     public static class ComputeServer
     {
-        public static string WebAddress { get; set; } = "ここにCompute.Rhino3dが実行されているアドレスをセット。";
-        public static string AuthToken { get; set; } = "AuthToken を ここにセット"
+        public static string WebAddress { get; set; } = "Compute.Rhino3dのアドレスをセット。";
+        public static string AuthToken { get; set; } = "AuthTokenをここにセット";
 
         public static T Post<T>(string function, params object[] postData)
         {
@@ -105,3 +123,9 @@ namespace Rhino.Compute
     }
 }
 ```
+
+後はSampleフォルダ内の各サンプルのデバッグを実行し、うまく動作しているならば bin/Debugフォルダ内に各サンプルに応じたファイルが作成されます。
+例えば BrepBooleanOperation では、cube_sphere_difference.obj、cube_sphere_intersection.obj、cube_sphere_union.obj の三つが作成されます。
+
+cube_sphere_difference.obj ではbrepのメッシュ化とブーリアン演算をおこなった結果として以下のようなになっています。この機能のどちらも高級な関数を使うためCompute.Rhino3dでないとできない処理です。
+
