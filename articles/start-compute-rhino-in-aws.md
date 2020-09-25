@@ -1,5 +1,5 @@
 ---
-title: "AWSでのCompute.Rhino3dの始め方"
+title: "AWSでできる！ウェブでのジオメトリ計算サービスCompute.Rhino3dの始め方"
 emoji: "🦏"
 type: "tech" # tech: 技術記事 / idea: アイデア
 topics: ["rhinoceros", "aws"]
@@ -8,9 +8,19 @@ published: false
 
 # はじめに
 
-AWSでのCompute.Rhino3dの始め方についての記事です。mcneel公式のドキュメントは以下
+AWSでのCompute.Rhino3dの始め方についての記事です。
 
+Rhinocerosについてご存知の方は、まずはこのページを閉じてmcneel公式のドキュメントを見ることをおすすめします。
 [Getting started with Rhino Compute on AWS](https://github.com/mcneel/compute.rhino3d/blob/master/docs/getting-started.md)
+
+## そもそもCompute.Rhino3dって？
+
+以下公式より引用です。[Rhino Compute Service (ワークインプログレス)](https://www.rhino3d.com/compute)
+> Computeは、McNeelクラウドを介してステートレスREST APIを通じてRhinoのジオメトリライブラリへアクセスできるようにする実験的なプロジェクトです。Computeは、 Rhino Inside™ のテクノロジをベースに、Rhinoの高度なジオメトリ計算をオンラインのウェブサービスに埋め込みます。
+
+Rhinocerosという3DCADのジオメトリ計算機能をオンラインのウェブサービスとして埋め込むことができます。公式が参考としてHerokuを使って以下のようなとげとげのものの形状を変更させながら試せるものを公開しています。
+
+https://compute-rhino3d-appserver.herokuapp.com/example/
 
 # AWSの支度
 
