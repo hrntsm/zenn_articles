@@ -1,5 +1,5 @@
 ---
-title: "AWSでできる！ウェブでのジオメトリ計算サービスCompute.Rhino3dの始め方"
+title: "AWSでできる！クラウドでのジオメトリ計算サービスCompute.Rhino3dの始め方"
 emoji: "🦏"
 type: "tech" # tech: 技術記事 / idea: アイデア
 topics: ["rhinoceros", "aws"]
@@ -8,7 +8,7 @@ published: false
 
 # はじめに
 
-AWSでのCompute.Rhino3dの始める方法についての記事です。
+Amazon Elastic Compute Cloud(EC2)でCompute.Rhino3dの始める方法についての記事です。
 
 Compute.Rhino3dは開発中なため、2020/9/30時点での情報です。公式のドキュメントの更新も頻繁なため、参照しているリンクが切れている可能性があります。もしリンクが切れていたら公式のGitHubのリポのトップページは以下になりますので、そこから最新の情報を探してみてください。
 
@@ -20,7 +20,7 @@ Compute.Rhino3dは開発中なため、2020/9/30時点での情報です。公�
 
 > McNeelクラウドを介してステートレスREST APIを通じてRhinoのジオメトリライブラリへアクセスできるようにする実験的なプロジェクトです。Computeは、 Rhino Inside™ のテクノロジをベースに、Rhinoの高度なジオメトリ計算をオンラインのウェブサービスに埋め込みます。
 
-Rhinocerosという3DCADのジオメトリ計算機能をオンラインのウェブサービスとして埋め込むことができます。公式が参考としてHerokuを使って以下のようなとげとげのものの形状を変更させながら試せるものを公開しています。
+Rhinocerosという3DCADのジオメトリ計算機能をオンラインのウェブサービスとして埋め込むことができます。公式が参考としてHerokuを使って、とげとげな形状をスライダーで変更させるものを公開しています。
 
 https://compute-rhino3d-appserver.herokuapp.com/example/
 
@@ -47,10 +47,10 @@ AWS EC2でのWindows Server 2019のインスタンスの作り方はいろいろ
 
 Core-Hourなので課金形態は以下のようになります。
 
-+ 1台の32コアのサーバーで1時間実行した場合
-  + 1台 × 32コア × 1時間 × 0.10/core-hour = 3.20 米ドル
-+ 200台の4コアのサーバーで6分実行した場合
-  + 200台 × 4コア × 0.1時間 × 0.10/core-hour = 8.00 米ドル
+1. 1台の32コアのサーバーで1時間実行した場合
+   + 1台 × 32コア × 1時間 × 0.10/core-hour = 3.20 米ドル
+2. 200台の4コアのサーバーで6分実行した場合
+   + 200台 × 4コア × 0.1時間 × 0.10/core-hour = 8.00 米ドル
 
 ## ライセンスの作成方法
 
@@ -75,11 +75,11 @@ Core-Hourなので課金形態は以下のようになります。
     ```bash
     iwr -useb https://raw.githubusercontent.com/mcneel/compute.rhino3d/master/script/bootstrap-server.ps1 -outfile bootstrap.ps1; .\bootstrap.ps1 -install
     ```
-2. 1.を実行すると必要なものがダウンロードされる途中で以下の入力を求められるためそれぞれを入力する
+2. 1.を実行すると必要なものがダウンロードされる。途中で以下の入力を求められるためそれぞれを入力する
    + EmailAdress : RhinoWIPをダウンロードするために使用する
    + ApiKey : APIのキーでAPIアクセスする際に使うため
    + RhinoToken : ”ライセンスの作成方法”の部分で取得したAuthToken
-3. ブラウザーで  http://public-dns-or-ip/version にアクセスして例えば以下のようにバージョンが表示されれば問題なく実行されています
+3. ブラウザーで  http://public-dns-or-ip/version にアクセスして、以下のようなバージョン情報が表示されれば問題なく実行されています
 
     ```json
     {
@@ -94,7 +94,6 @@ Core-Hourなので課金形態は以下のようになります。
 ## サンプルファイルを取得
 
 mcneelのGitHubからサンプルファイルをクローンして使います。
-
 [compute.rhino3d-samples](https://github.com/mcneel/compute.rhino3d-samples)
 
 ```bash
@@ -103,7 +102,7 @@ git clone https://github.com/mcneel/compute.rhino3d-samples.git
 
 ## APIキーとWebAdressの設定
 
-Visual Studio などでSampleフォルダ内の RhinoComputeSamples.sln を開いて設定したAPIキーとcompute.rhinoのアドレス、compute.rhino3d-samples/samples/RhinoComputeフォルダ内にある RhinoCompute.csの以下の位置に入れてください。
+Visual StudioなどでSampleフォルダ内の RhinoComputeSamples.sln を開いて設定したAPIキーとcompute.rhinoのアドレスをcompute.rhino3d-samples/samples/RhinoComputeフォルダ内にある RhinoCompute.csの以下の位置に入れてください。
 
 Headerの追記箇所については近いうち追記しなくてもよいようにリポのデータを更新するとのことです。
 
@@ -112,7 +111,7 @@ namespace Rhino.Compute
 {
     public static class ComputeServer
     {
-        public static string WebAddress { get; set; } = " http://public-dns-or-ip/";
+        public static string WebAddress { get; set; } = " http://public-dns-or-ip/"; # ここに入れる
         public static string AuthToken { get; set; }
 
         public static T Post<T>(string function, params object[] postData)
@@ -150,7 +149,7 @@ namespace Rhino.Compute {
 
 ## 実行！
 
-後はSampleフォルダ内の各サンプルを実行し、うまく動作しているならば bin/Debugフォルダ内に各サンプルに応じたファイルが作成されます。
+Sampleフォルダ内の各サンプルを実行し、うまく動作しているならば bin/Debugフォルダ内に各サンプルに応じたファイルが作成されます。
 例えば BrepBooleanOperation では、cube_sphere_difference.obj、cube_sphere_intersection.obj、cube_sphere_union.obj の三つが作成されます。
 
 cube_sphere_difference.obj ではbrepのメッシュ化とブーリアン演算をおこなった結果として以下のようなになっています。この機能のどちらも高級な関数を使うためCompute.Rhino3dでないとできない処理です。
