@@ -3,7 +3,7 @@ title: "AWSでできる！クラウドでのジオメトリ計算サービスCom
 emoji: "🦏"
 type: "tech" # tech: 技術記事 / idea: アイデア
 topics: ["rhinoceros", "aws"]
-published: false
+published: true
 ---
 
 # はじめに
@@ -20,7 +20,7 @@ Compute.Rhino3dは開発中なため、2020/9/30時点での情報です。公�
 
 > McNeelクラウドを介してステートレスREST APIを通じてRhinoのジオメトリライブラリへアクセスできるようにする実験的なプロジェクトです。Computeは、 Rhino Inside™ のテクノロジをベースに、Rhinoの高度なジオメトリ計算をオンラインのウェブサービスに埋め込みます。
 
-Rhinocerosという3DCADのジオメトリ計算機能をオンラインのウェブサービスとして埋め込むことができます。公式が参考としてHerokuを使って、とげとげな形状をスライダーで変更させるものを公開しています。
+Rhinocerosという3DCADのジオメトリ計算機能をオンラインのウェブサービスとして埋め込むことができます。公式が参考としてHerokuを使ってとげとげな形状をスライダーで変更させるものを公開しています。
 
 https://compute-rhino3d-appserver.herokuapp.com/example/
 
