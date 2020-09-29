@@ -8,15 +8,17 @@ published: false
 
 # はじめに
 
-AWSでのCompute.Rhino3dの始め方についての記事です。
+AWSでのCompute.Rhino3dの始める方法についての記事です。
 
-Rhinocerosについてご存知の方は、まずはこのページを閉じてmcneel公式のドキュメントを見ることをおすすめします。
-[Getting started with Rhino Compute on AWS](https://github.com/mcneel/compute.rhino3d/blob/master/docs/getting-started.md)
+Compute.Rhino3dは開発中なため、2020/9/30時点での情報です。公式のドキュメントの更新も頻繁なため、参照しているリンクが切れている可能性があります。もしリンクが切れていたら公式のGitHubのリポのトップページは以下になりますので、そこから最新の情報を探してみてください。
+
+[Rhino Compute Server](https://github.com/mcneel/compute.rhino3d)
 
 ## そもそもCompute.Rhino3dって？
 
 以下公式より引用です。[Rhino Compute Service (ワークインプログレス)](https://www.rhino3d.com/compute)
-> Computeは、McNeelクラウドを介してステートレスREST APIを通じてRhinoのジオメトリライブラリへアクセスできるようにする実験的なプロジェクトです。Computeは、 Rhino Inside™ のテクノロジをベースに、Rhinoの高度なジオメトリ計算をオンラインのウェブサービスに埋め込みます。
+
+> McNeelクラウドを介してステートレスREST APIを通じてRhinoのジオメトリライブラリへアクセスできるようにする実験的なプロジェクトです。Computeは、 Rhino Inside™ のテクノロジをベースに、Rhinoの高度なジオメトリ計算をオンラインのウェブサービスに埋め込みます。
 
 Rhinocerosという3DCADのジオメトリ計算機能をオンラインのウェブサービスとして埋め込むことができます。公式が参考としてHerokuを使って以下のようなとげとげのものの形状を変更させながら試せるものを公開しています。
 
@@ -27,28 +29,13 @@ https://compute-rhino3d-appserver.herokuapp.com/example/
 ## 作成するインスタンスの種類
 
 環境としては最低でもWindows Server2016、推奨ではWindows Server 2019 となっています。ここではAWSのWindows Server 2019 Baseを使うことを想定します。無料枠で使用可能な t2.micro (1vCPU, 1GB RAM) のインスタンスでも可能ですが、メモリが1GBでつらいです。公式のドキュメントでは、t2.medium (2vCPU, 4GB RAM)  がスタートするには良いと書かれています。
+わたしも最初はt2.microでやっていましたが、動作が重すぎてt2.mediumに変えました。
 
 ## インスタンスの作成
 
-AWS EC2でのWindows Server 2019のインスタンスの作り方はいろいろなサイトで紹介されているのでここでは割愛します。以下とかを参考にしました。
+AWS EC2でのWindows Server 2019のインスタンスの作り方はいろいろなサイトで紹介されているのでここでは割愛します。以下とかを参考にしました。”2.EC2インスタンに接続する” までやればよいです。
 
 [AWSでEC2(WindowsServer2019)を作成し一般公開するまで方法](https://qiita.com/og_omochi/items/c85bfd61fd4bd9e5baab)
-
-上記記事にもありますが、外部からアクセスできるようにするために以下をしてください。
-
-1. 管理者でPowerShellを起動して以下を実行すると IIS をインストールし、自動で 80 と 443 が開かれる。
-    ```bash
-    Install-WindowsFeature -name Web-Server -IncludeManagementTools
-    ```
-2. URLの設定をします
-   1. HTTPの場合:
-      ```bash
-      netsh http add urlacl url="http://+:80/" user="Everyone"
-      ```
-   2. HTTPSの場合:
-      ```bash
-      netsh http add urlacl url="https://+:443/" user="Everyone"
-      ```
 
 # Compute.Rhino3dの支度
 
@@ -56,9 +43,9 @@ AWS EC2でのWindows Server 2019のインスタンスの作り方はいろいろ
 
 公式のドキュメント [Pricing - Rhino 7 on Servers](https://www.rhino3d.com/compute-pricing)
 
-通常のシングルコンピューターライセンスでは認証ではじかれてしまいます。サーバーインスタンスでのRhinoの実行には専用のライセンスが必要で、このライセンスはコア時間での課金になっています。現在WIP版なのでこの価格が正式版になるかわかりませんが、2020年■■現在では0.10米ドル/core-hourです。価格については要確認です。
+通常のシングルコンピューターライセンスでは認証ではじかれてしまいます。サーバーインスタンスでのRhinoの実行には専用のライセンスが必要で、このライセンスはコア時間での課金になっています。現在WIP版なのでこの価格が正式版になるかわかりませんが、2020年9月30日現在では0.10米ドル/core-hourです。
 
-Core-Hourなので課金形態は例えば以下のようになります。
+Core-Hourなので課金形態は以下のようになります。
 
 + 1台の32コアのサーバーで1時間実行した場合
   + 1台 × 32コア × 1時間 × 0.10/core-hour = 3.20 米ドル
@@ -67,25 +54,32 @@ Core-Hourなので課金形態は例えば以下のようになります。
 
 ## ライセンスの作成方法
 
-上記で書いたようにAWS向けには専用のライセンスが必要になります。作り方としては自分のRhinoのアカウント内に専用のチームを作成します。
+上記で書いたようにWindows Server向けには専用のライセンスが必要になります。作り方としては自分のRhinoのアカウント内に専用のチームを作成します。
 
 1. [Rhino Accounts](https://accounts.rhino3d.com/) にアクセスする
 2. ライセンスのページに行く
 3. 新規チームを作成する
-4. チームの管理 から コア時間課金の管理 を選ぶ
+4. チームの管理 から コア時間課金の管理… を選ぶ
 5. コア時間課金を有効にして保存する
+6. 再度コア課金の管理のページに行き、操作▼ から Get Auth Token を選ぶ
+   + このAuthTokenをRhinoをインストールする際にライセンス認証するために使います。
 
 
 ## 実行環境構築
 
-公式のドキュメント [Installation](https://github.com/mcneel/compute.rhino3d/blob/master/docs/installation.md)
+公式のドキュメント [Deploying Rhino Compute](https://github.com/mcneel/compute.rhino3d/blob/master/docs/deploy.md)
 
 対象の環境で以下を行います。AWSでやるならばそのWindows Server内で行ってください。
 
-1. ここから [最新のビルド](https://ci.appveyor.com/api/projects/mcneel/compute-rhino3d/artifacts/compute.zip?branch=master&pr=false) のデータをダウンロードして解凍する
-2. RhinoWIP(Rhino7)を少なくとも1回起動する（ライセンス認証するため）
-3. PowerShell を起動してCompute.Rhino3dのフォルダ内にある compute.frontend.exe を実行する
-4. ブラウザーで http://localhost/version にアクセスして例えば以下のようにバージョンが表示されれば問題なく実行されています
+1. PowerShell を起動して以下を入力する
+    ```bash
+    iwr -useb https://raw.githubusercontent.com/mcneel/compute.rhino3d/master/script/bootstrap-server.ps1 -outfile bootstrap.ps1; .\bootstrap.ps1 -install
+    ```
+2. 1.を実行すると必要なものがダウンロードされる途中で以下の入力を求められるためそれぞれを入力する
+   + EmailAdress : RhinoWIPをダウンロードするために使用する
+   + ApiKey : APIのキーでAPIアクセスする際に使うため
+   + RhinoToken : ”ライセンスの作成方法”の部分で取得したAuthToken
+3. ブラウザーで  http://public-dns-or-ip/version にアクセスして例えば以下のようにバージョンが表示されれば問題なく実行されています
 
     ```json
     {
@@ -94,15 +88,8 @@ Core-Hourなので課金形態は例えば以下のようになります。
       "git_sha":"a612c257"
     }
     ```
-この手順はAWSに限らずローカル（windows10）でテストする場合なども同じです。
 
-# サンプルを実行！！
-
-## トークン取得
-
-実行するためにはCompute.Rhino3dのAuthTokenが必要になるため、それをまず設定します。次のURLからトークンを発行してください。トークンの発行にはRhinoのアカウントが必要になります。
-
-https://www.rhino3d.com/compute/login
+# Compute.Rhino3dを実行する
 
 ## サンプルファイルを取得
 
@@ -114,38 +101,73 @@ mcneelのGitHubからサンプルファイルをクローンして使います�
 git clone https://github.com/mcneel/compute.rhino3d-samples.git
 ```
 
-## 実行
+## APIキーとWebAdressの設定
 
-Visual Studio などでSampleフォルダ内の RhinoComputeSamples.sln を開いて発行したトークンとcompute.rhinoのアドレスを、compute.rhino3d-samples/samples/RhinoComputeフォルダ内にある RhinoCompute.csの以下の位置に入れてください。ローカルで実行しているならばWebAdressは http://localhost:8081 になります。
+Visual Studio などでSampleフォルダ内の RhinoComputeSamples.sln を開いて設定したAPIキーとcompute.rhinoのアドレス、compute.rhino3d-samples/samples/RhinoComputeフォルダ内にある RhinoCompute.csの以下の位置に入れてください。
+
+Headerの追記箇所については近いうち追記しなくてもよいようにリポのデータを更新するとのことです。
 
 ```cs
 namespace Rhino.Compute
 {
     public static class ComputeServer
     {
-        public static string WebAddress { get; set; } = "Compute.Rhino3dのアドレスをセット。";
-        public static string AuthToken { get; set; } = "AuthTokenをここにセット";
+        public static string WebAddress { get; set; } = " http://public-dns-or-ip/";
+        public static string AuthToken { get; set; }
 
         public static T Post<T>(string function, params object[] postData)
         {
+          .......
+          request.Headers.Add("Authorization", "Bearer " + AuthToken);
+          // ↓追記(25行目あたり)
+          request.Headers.Add("RhinoComputeKey", "実行環境構築で設定したApiKeyを入れる");
+          // ↑追記
+          request.Method = "POST";
           .......
         }
     }
 }
 ```
 
-後はSampleフォルダ内の各サンプルのデバッグを実行し、うまく動作しているならば bin/Debugフォルダ内に各サンプルに応じたファイルが作成されます。
+## AuthTokenの設定
+
+”実行環境構築”の個所で入力したRhinoTokenをcompute.rhino3d-samples/samples/RhinoComputeフォルダ内にあるAuthToken.csの以下の位置に入れてください。
+
+```cs
+namespace Rhino.Compute {
+    public static class AuthToken {
+        public static string Get () {
+          ....
+          if (!String.IsNullOrEmpty (tokenFromEnv))
+          {
+            return tokenFromEnv;
+          } else
+          {
+            return "ここにRhinoTokenいれる";
+          }
+          ....
+```
+
+## 実行！
+
+後はSampleフォルダ内の各サンプルを実行し、うまく動作しているならば bin/Debugフォルダ内に各サンプルに応じたファイルが作成されます。
 例えば BrepBooleanOperation では、cube_sphere_difference.obj、cube_sphere_intersection.obj、cube_sphere_union.obj の三つが作成されます。
 
 cube_sphere_difference.obj ではbrepのメッシュ化とブーリアン演算をおこなった結果として以下のようなになっています。この機能のどちらも高級な関数を使うためCompute.Rhino3dでないとできない処理です。
 
 ![](https://storage.googleapis.com/zenn-user-upload/q4908ig96mxxu4es1yy3k95lm2ee)
 
+## ちなみに
+
+結局ローカルのRhinoAPI と RhinoCompute何が違うの？というのはここを見るとわかるかもしれません。
+
+[Please Explain Local Rhino API vs Rhino Compute](https://discourse.mcneel.com/t/please-explain-local-rhino-api-vs-rhino-compute/108991?u=hiron)
+
 # Next Step
 
 今回はC#環境での実行でしたが、PythonやJavaScriptのCompute.Rhino3dもあるので自分のやりたいことに合った言語を使って、Compute.Rhino3dを満喫しましょう。
 
-jsは 以下のチュートリアルがおすすめです。
+jsは 冒頭で紹介した参考例を作成する以下のチュートリアルがおすすめです。
 
 [compute.rhino3d.appserver](https://github.com/mcneel/compute.rhino3d.appserver)
 
@@ -156,4 +178,4 @@ jsは 以下のチュートリアルがおすすめです。
 この記事では、AWSでのCompute.Rhino3dの使い方について解説しました。AWS上でRhinoの高級な関数が実行できることはとても魅力的ではないでしょうか。
 計算自体はサーバーで行うため、スマフォのような端末でもRhinoの幾何計算の結果を取得できるのが面白いところだと思っています。
 
-あなたもAWSそしてCompute.Rhino3dへの重課金でのパケ死に気を付けてクラウドなRhino3dを楽しみましょう！！！
+あなたもAWS、そしてCompute.Rhino3dへの重課金でのパケ死に気を付けてクラウドなRhinocerosを楽しみましょう！！！
