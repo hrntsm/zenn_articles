@@ -79,7 +79,21 @@ Core-Hourなので課金形態は以下のようになります。
    + EmailAdress : RhinoWIPをダウンロードするために使用する
    + ApiKey : APIのキーでAPIアクセスする際に使うため
    + RhinoToken : ”ライセンスの作成方法”の部分で取得したAuthToken
-3. ブラウザーで  http://public-dns-or-ip/version にアクセスして、以下のようなバージョン情報が表示されれば問題なく実行されています
+3. ダウンロードした Compute のフォルダ内の compute.geometry.exeを実行して、以下のように "The compute.geometry service is now running" が表示されるまで待つ
+
+   ```
+   [00:00:00 INF] Compute 1.0.0.493, Rhino 7.0.20266.15205
+   [00:00:00 INF] Configuration Result:
+   [Success] Name compute.geometry
+   [Success] ServiceName compute.geometry
+   [00:00:00 INF] Topshelf v4.1.0.172, .NET Framework v4.0.30319.42000
+   [00:00:00 INF] Launching RhinoCore library as "USERNAME"
+   [00:00:00 INF] Starting listener(s): ["http://+:80"]
+   [00:00:00 INF] Listening on ["http://+:80"]
+   [00:00:00 INF] The compute.geometry service is now running, press Control+C to exit.
+   ```
+
+4. ブラウザーで  http://public-dns-or-ip/version にアクセスして、以下のようなバージョン情報が表示されれば問題なく実行されています
 
     ```json
     {
