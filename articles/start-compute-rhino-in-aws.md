@@ -8,7 +8,8 @@ published: true
 
 # はじめに
 
-Amazon Elastic Compute Cloud(EC2)でCompute.Rhino3dの始める方法についての記事です。
+Amazon Elastic Compute Cloud(EC2)でCompute.Rhino3dの始める方法についての記事です。RhinoCompute ともいうみたいで、何がCompute.Rhino3dで何がRhinoComputeなのかよくわからないです。
+
 
 Compute.Rhino3dは開発中なため、2020/9/30時点での情報です。公式のドキュメントの更新も頻繁なため、参照しているリンクが切れている可能性があります。もしリンクが切れていたら公式のGitHubのリポのトップページは以下になりますので、そこから最新の情報を探してみてください。
 
