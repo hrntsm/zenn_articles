@@ -40,7 +40,7 @@ nugetパッケージの管理形式は、Package.config ではなく、PackageRe
 
 GitHub Actions は、YAML 構文を使用して、イベント、ジョブ、およびステップを定義しています。これらの YAML ファイルは、コードリポジトリの .github/workflows というディレクトリに保存することで、動作の対象になります。
 
-```
+```yml
 name: Build Grasshopper Plugin
 
 on:
