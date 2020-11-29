@@ -3,3 +3,5 @@ summary: "Grasshopperコンポーネントの開発を例にとってCIを使っ
 topics: ["github", "grasshopper"]
 published: false
 price: 0 
+chapters:
+  - BuildWithGithubActions
