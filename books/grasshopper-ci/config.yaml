@@ -6,5 +6,6 @@ price: 0
 chapters:
   - intro
   - build-with-github-actions
+  - code-quality
   - add-batch
   - reference
