@@ -5,9 +5,7 @@ title: "GitHub Actions でコンポーネントをビルドする"
 
 # はじめに
 
-この記事は、[AEC and Related Tech Advent Calendar 2020](https://adventar.org/calendars/5473) の 1 日目の記事です。建築関連のことならば技術記事に限らずなんでも OK のアドカレになっていますので興味のある方はみてください。
-
-建築系で設計検討に最近使われている Grasshopper というソフトで動作するコンポーネント（プラグイン）を、Github Actions を使ってビルドする方法についてを紹介します。
+この章では、Grasshopper というソフトで動作するコンポーネント（プラグイン）を、Github Actions を使ってビルドする方法についてを紹介します。
 
 # GitHub Actions とは
 
@@ -99,19 +97,3 @@ jobs:
 問題なく動作が完了すると、 以下のように Artifact としてビルドしたものがアップされ、クリックすることでダウンロードできます。
 
 ![](https://github.com/hrntsm/zenn_articles/blob/master/image/Artifact.png?raw=true)
-
-# バッジを付ける
-
-結果をバッジとして取得できます。これを使うことで整備されたリポジトリのような気持ちになれます。
-
-バッジの作成には [shields.io](https://shields.io/category/build) というサービスを使うと便利です。以下のようにリポの情報を入れると自動で情報を取得してバッジを作成してくれます。
-
-ここでは build が通っているかどうかのバッジが作成されますので、それを README などに張り付けるとバッジをリポジトリに表示できます。
-
-![](https://github.com/hrntsm/zenn_articles/blob/master/image/Shields.io.png?raw=true)
-
-# 参考リポジトリ
-
-この内容は以下のリポで環境構築しています。参考にしてください。
-
-[GrasshopperCISample](https://github.com/hrntsm/GrasshopperCISample)
