@@ -8,7 +8,7 @@ published: false
 
 # はじめに
 
-この記事は、[AEC and Related Tech Advent Calendar 2020](https://adventar.org/calendars/5473) の 1 日目の記事です。建設系にかかわることならなんでも OK のアドカレになっています。
+この記事は、[AEC and Related Tech Advent Calendar 2020](https://adventar.org/calendars/5473) の 1 日目の記事です。建築関連のことならば技術記事に限らずなんでも OK のアドカレになっていますので興味のある方はみてください。
 
 建築系で設計検討に最近使われている Grasshopper というソフトで動作するコンポーネント（プラグイン）を、Github Actions を使ってビルドする方法についてを紹介します。
 
@@ -42,9 +42,13 @@ nuget パッケージの管理形式は、Package.config ではなく、PackageR
 
 GitHub Actions は、YAML 構文を使用してイベント、ジョブ、およびステップを定義しています。
 
-この YAML ファイルは、コードリポジトリの .github/workflows というディレクトリに保存することで、動作の対象になります。ファイルの内容は以下になります。
+この YAML ファイルは、コードリポジトリの .github/workflows というディレクトリに保存することで、動作の対象になります。
+
+ファイルの内容は以下になります。適宜コメントで説明しています。
+やっていることを要約すると、msbuild を使って対象のプロジェクトファイルをビルドしています。
 
 ```yml
+# このワークフローの名前（バッジを作るときなどに使う）
 name: Build Grasshopper Plugin
 
 on:
@@ -55,7 +59,8 @@ on:
 
 jobs:
   build:
-    # Windows の最新の環境を使用する（現在は Windows Server 2019 になる ）
+    # Github Actions での Windows の最新の環境を指定
+    #（現在は Windows Server 2019 になる ）
     runs-on: windows-latest # windows-2019 でも同じ意味
 
     steps:
@@ -108,7 +113,7 @@ jobs:
 
 ![](https://github.com/hrntsm/zenn_articles/blob/master/image/Shields.io.png?raw=true)
 
-# 参考リポ
+# 参考リポジトリ
 
 この内容は以下のリポで環境構築しています。参考にしてください。
 
