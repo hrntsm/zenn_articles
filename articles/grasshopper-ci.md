@@ -36,7 +36,7 @@ Grasshopper コンポーネントの開発には Visual Studio 2019 を使いま
 
 nuget パッケージの管理形式は、Package.config ではなく、PackageReference にしてください。
 
-![](../image/PackageReference.png)
+![](https://github.com/hrntsm/zenn_articles/blob/master/image/PackageReference.png?raw=true)
 
 # GitHub Actions の設定の仕方
 
@@ -92,11 +92,11 @@ jobs:
 
 上記ファイルをリモートの develop にプッシュすると、Actions が動き出します。動作は GitHub の対象のリポの Actions のタブをクリックすると確認できます。Actions が動いているときは以下のようにオレンジ色の丸が表示され、問題なく動作が完了すると緑のㇾマーク、何かエラーがあり止まると赤色の × マークになります。
 
-![](../image/CheckWorkFlow.png)
+![](https://github.com/hrntsm/zenn_articles/blob/master/image/CheckWorkFlow.png?raw=true)
 
 問題なく動作が完了すると、 以下のように Artifact としてビルドしたものがアップされ、クリックすることでダウンロードできます。
 
-![](../image/Artifact.png)
+![](https://github.com/hrntsm/zenn_articles/blob/master/image/Artifact.png?raw=true)
 
 # バッジを付ける
 
@@ -106,7 +106,7 @@ jobs:
 
 ここでは build が通っているかどうかのバッジが作成されますので、それを README などに張り付けるとバッジをリポジトリに表示できます。
 
-![](../image/Shields.io.png)
+![](https://github.com/hrntsm/zenn_articles/blob/master/image/Shields.io.png?raw=true)
 
 # 参考リポ
 
