@@ -2,15 +2,15 @@
 title: "Github を使った Grasshopper コンポーネントのビルドの仕方"
 emoji: "🦏"
 type: "tech" # tech: 技術記事 / idea: アイデア
-topics: ["rhinoceros", "grasshopper"]
+topics: ["grasshopper", "github"]
 published: false
 ---
 
 # はじめに
 
-この記事は、[AEC and Related Tech Advent Calendar 2020](https://adventar.org/calendars/5473) の 1 日目の記事です。
+この記事は、[AEC and Related Tech Advent Calendar 2020](https://adventar.org/calendars/5473) の 1 日目の記事です。建設系にかかわることならなんでも OK のアドカレになっています。
 
-Rhinceros の Grasshopper で動作するコンポーネントを、Github Actions を使って build する方法についてを紹介します。
+建築系で設計検討に最近使われている Grasshopper というソフトで動作するコンポーネント（プラグイン）を、Github Actions を使ってビルドする方法についてを紹介します。
 
 # GitHub Actions とは
 
@@ -24,21 +24,25 @@ GitHub のリポにプッシュやプルリクなどの設定したアクショ�
 
 develop にプッシュしたとき、および main にプルリクした際 GitHub Actions を使ってコンポーネントをビルドして GitHub 上に保存することをやります。
 
-GitHub Actions は Windows 環境にも対応しているため、そこで VisualStudio を起動してビルドさせることを行います。
+GitHub Actions は Windows 環境にも対応しているため、Windows 環境で Visual Studio を起動してビルドさせることを行います。
 
 # ローカルでの支度
 
-Grasshopper コンポーネントの開発には VisualStudio2019 を使います。0 から開発するのは大変なので、以下から開発用にテンプレートを使用します。
+Grasshopper コンポーネントの開発には Visual Studio 2019 を使います。0 から開発するのは大変なので、以下から開発用のテンプレートをダウンロードして使用します。
 
 [Grasshopper templates for v6](https://marketplace.visualstudio.com/items?itemName=McNeel.GrasshopperAssemblyforv6)
 
-こちらのテンプレートを使用すると、RhinoCommon.dll や GH_IO.dll などの参照がローカルになっています。GitHub の環境では当然ですがこれらの dll ファイルはローカルにないため、Nuget を使ったものに修正します。
+こちらのテンプレートを使用すると、RhinoCommon.dll や GH_IO.dll などの参照がローカルになっています。GitHub の環境では当然ですがこれらの dll ファイルはローカルにないため、nuget を使ったものに修正してください。
 
 nuget パッケージの管理形式は、Package.config ではなく、PackageReference にしてください。
 
+![](../image/PackageReference.png)
+
 # GitHub Actions の設定の仕方
 
-GitHub Actions は、YAML 構文を使用してイベント、ジョブ、およびステップを定義しています。これらの YAML ファイルは、コードリポジトリの .github/workflows というディレクトリに保存することで、動作の対象になります。
+GitHub Actions は、YAML 構文を使用してイベント、ジョブ、およびステップを定義しています。
+
+この YAML ファイルは、コードリポジトリの .github/workflows というディレクトリに保存することで、動作の対象になります。ファイルの内容は以下になります。
 
 ```yml
 name: Build Grasshopper Plugin
@@ -77,13 +81,32 @@ jobs:
         run: msbuild /p:Configuration=Release
 
       # 対象パスにあるファイルを GitHub にアップロードする
-      - name: Upload release build of plugin as artefact
+      - name: Upload build as artifact
         uses: actions/upload-artifact@v2
         with:
           name: GrasshopperComponent
-          path: |
-            ./GrasshopperCISample/bin/GrasshopperCISample.gha
+          path: ./GrasshopperCISample/bin/GrasshopperCISample.gha
 ```
+
+# 動作確認
+
+上記ファイルをリモートの develop にプッシュすると、Actions が動き出します。動作は GitHub の対象のリポの Actions のタブをクリックすると確認できます。Actions が動いているときは以下のようにオレンジ色の丸が表示され、問題なく動作が完了すると緑のㇾマーク、何かエラーがあり止まると赤色の × マークになります。
+
+![](../image/CheckWorkFlow.png)
+
+問題なく動作が完了すると、 以下のように Artifact としてビルドしたものがアップされ、クリックすることでダウンロードできます。
+
+![](../image/Artifact.png)
+
+# バッジを付ける
+
+結果をバッジとして取得できます。これを使うことで整備されたリポジトリのような気持ちになれます。
+
+バッジの作成には [shields.io](https://shields.io/category/build) というサービスを使うと便利です。以下のようにリポの情報を入れると自動で情報を取得してバッジを作成してくれます。
+
+ここでは build が通っているかどうかのバッジが作成されますので、それを README などに張り付けるとバッジをリポジトリに表示できます。
+
+![](../image/Shields.io.png)
 
 # 参考リポ
 
