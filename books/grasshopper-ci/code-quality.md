@@ -20,11 +20,11 @@ Codacy というサービスを使って、コードの品質を測ってみま�
 アカウントを作成すると連携するリポジトリを選択する画面になるので、対象にしたいリポジトリを選んでください。
 デフォルトでのコード解析の対象は main ブランチになっています。開発は develop ブランチで行うことが多いので、以下のように対象のブランチを変更しておくと良いです。
 
-![](./image/codacy.png)
+![](https://github.com/hrntsm/zenn_articles/blob/master/books/grasshopper-ci/image/codacy.png?raw=true)
 
 連携ができていれば自動でコードに対する解析が実行され、Files を開くと以下のように各ファイルごとにコードクオリティがどの程度かが表示されます。ここでは ”GrasshopperCISample/Util.cs” の 1 つだけがクオリティ C であることがわかります。
 
-![](./image/quality.png)
+![](https://github.com/hrntsm/zenn_articles/blob/master/books/grasshopper-ci/image/quality.png?raw=true)
 
 該当のファイルを選択するとどこでクオリティが下がっているか確認できるので、修正時は参考にしてください。
 

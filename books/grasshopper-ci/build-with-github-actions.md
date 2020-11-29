@@ -103,4 +103,4 @@ jobs:
 それを避けるために、main ブランチにプルリクした際、ここで設定した CI が動くようにしています。
 うっかり動かないものでも main ブランチにプルリクすると CI でチェックされるので以下のように check が failed になり、ミスを未然に防げます。
 
-![](./image/pullreq.png)
+![](https://github.com/hrntsm/zenn_articles/blob/master/books/grasshopper-ci/image/pullreq.png?raw=true)
