@@ -5,6 +5,7 @@ title: "GitHub Actions でコンポーネントをビルドする"
 # はじめに
 
 この章では、Grasshopper というソフトで動作するコンポーネント（プラグイン）を、Github Actions を使ってビルドする方法についてを紹介します。
+要は、.NET Framework を Github Actions で使ってビルドする方法になります。
 
 # GitHub Actions とは
 
@@ -16,9 +17,12 @@ GitHub のリポにプッシュやプルリクなどの設定したアクショ�
 
 # やりたいこと
 
-develop にプッシュしたとき、および main にプルリクした際 GitHub Actions を使ってコンポーネントをビルドして GitHub 上に保存することをやります。
+以下のときに、GitHub Actions を使ってコンポーネントをビルドして GitHub 上に保存する。
 
-GitHub Actions は Windows 環境にも対応しているため、Windows 環境で Visual Studio を起動してビルドさせることを行います。
+- develop にプッシュ、プルリク
+- main にプルリク
+
+GitHub Actions は Windows 環境にも対応しているため、Windows 環境で Visual Studio を使ってビルドさせることを行います。
 
 # ローカルでの支度
 
@@ -26,7 +30,8 @@ Grasshopper コンポーネントの開発には Visual Studio 2019 を使いま
 
 [Grasshopper templates for v6](https://marketplace.visualstudio.com/items?itemName=McNeel.GrasshopperAssemblyforv6)
 
-こちらのテンプレートを使用すると、RhinoCommon.dll や GH_IO.dll などの参照がローカルになっています。GitHub の環境では当然ですがこれらの dll ファイルはローカルにないため、nuget を使ったものに修正してください。
+こちらのテンプレートを使用すると、RhinoCommon.dll や GH_IO.dll などの参照がローカルになっています。GitHub の環境では当然ですが Rhino がインストールされていないため、これらの dll ファイルはローカルにないので、nuget を使ったものに修正してください。
+余談ですが、nuget の Rhino 関連のものの最新版は Rhino7 向けになっています。Rhino6 向けに使う場合は 6.XX で書かれているバージョンを使いましょう。
 
 nuget パッケージの管理形式は、Package.config ではなく、PackageReference にしてください。
 
@@ -36,10 +41,11 @@ nuget パッケージの管理形式は、Package.config ではなく、PackageR
 
 GitHub Actions は、YAML 構文を使用してイベント、ジョブ、およびステップを定義しています。
 
-この YAML ファイルは、コードリポジトリの .github/workflows というディレクトリに保存することで、動作の対象になります。
+この YAML ファイルを、コードリポジトリの .github/workflows というディレクトリに保存することで、動作の対象になります。
+ファイル名は何でも構いません。
 
-ファイルの内容は以下になります。適宜コメントで説明しています。
-やっていることを要約すると、msbuild を使って対象のプロジェクトファイルをビルドしています。
+ファイルの内容は以下になります。適宜コメントアウトで説明しています。
+やっていることを要約すると、MSBuild を使って対象のプロジェクトファイルをビルドしています。
 
 ```yml
 # このワークフローの名前（バッジを作るときなどに使う）
@@ -48,8 +54,8 @@ name: Build Grasshopper Plugin
 on:
   push: # develop にプッシュしたときに動く
     branches: [develop]
-  pull_request: # main にプルリクしたときに動く
-    branches: [main]
+  pull_request: # main と develop にプルリクしたときに動く
+    branches: [main, develop]
 
 jobs:
   build:
@@ -62,7 +68,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
 
-      # Vusial Studio のセットアップをする
+      # Vusial Studio (MSBuild)のセットアップをする
       - name: Setup MSBuild.exe
         uses: microsoft/setup-msbuild@v1
 
