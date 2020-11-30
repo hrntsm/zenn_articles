@@ -1,5 +1,5 @@
 ---
-title: "Github を使った Grasshopper コンポーネントのビルドの仕方"
+title: "Github Action を使った Grasshopper コンポーネントのビルドの仕方"
 emoji: "🦏"
 type: "tech" # tech: 技術記事 / idea: アイデア
 topics: ["grasshopper", "github"]
@@ -8,11 +8,11 @@ published: false
 
 # はじめに
 
-この記事は、[AEC and Related Tech Advent Calendar 2020](https://adventar.org/calendars/5473) の 1 日目の記事です。建築関連のことならば技術記事に限らずなんでも OK のアドカレになっていますので興味のある方はみてください。
+この記事は、[AEC and Related Tech Advent Calendar 2020](https://adventar.org/calendars/5473) の 1 日目の記事です。建築関連のことならば技術記事に限らずなんでも OK のアドカレになっていますので興味のある方はみてください!
 
-建築系で設計検討に最近使われている Grasshopper というソフトで動作するコンポーネント（プラグイン）を、Github Actions を使ってビルドする方法についてを紹介します。
+ここでは、建築系で設計検討に最近使われている Grasshopper というソフトで動作するコンポーネント（プラグイン）を、Github Actions を使ってビルドする方法についてを紹介します。
 
-# GitHub Actions とは
+## GitHub Actions とは
 
 以下公式より引用 [GitHub Actions](https://github.co.jp/features/actions)
 
@@ -22,7 +22,10 @@ GitHub のリポにプッシュやプルリクなどの設定したアクショ�
 
 # やりたいこと
 
-develop にプッシュしたとき、および main にプルリクした際 GitHub Actions を使ってコンポーネントをビルドして GitHub 上に保存することをやります。
+以下のときに、GitHub Actions を使ってコンポーネントをビルドして GitHub 上に保存する。
+
+- develop にプッシュ、プルリク
+- main にプルリク
 
 GitHub Actions は Windows 環境にも対応しているため、Windows 環境で Visual Studio を起動してビルドさせることを行います。
 
@@ -32,9 +35,10 @@ Grasshopper コンポーネントの開発には Visual Studio 2019 を使いま
 
 [Grasshopper templates for v6](https://marketplace.visualstudio.com/items?itemName=McNeel.GrasshopperAssemblyforv6)
 
-こちらのテンプレートを使用すると、RhinoCommon.dll や GH_IO.dll などの参照がローカルになっています。GitHub の環境では当然ですがこれらの dll ファイルはローカルにないため、nuget を使ったものに修正してください。
+こちらのテンプレートを使用すると、RhinoCommon.dll や GH_IO.dll などの参照がローカルになっています。GitHub の環境では当然ですが Rhino がインストールされていないため、これらの dll ファイルはローカルにないので、nuget を使ったものに修正してください。
+余談ですが、nuget の Rhino 関連のものの最新版は Rhino7 向けになっています。Rhino6 向けに使う場合は 6.XX で書かれているバージョンを使いましょう。
 
-nuget パッケージの管理形式は、Package.config ではなく、PackageReference にしてください。
+nuget パッケージの管理形式は、Package.config ではなく、PackageReference にしてください。VisualStudio のオプションの以下から変更できます。
 
 ![](https://github.com/hrntsm/zenn_articles/blob/master/image/PackageReference.png?raw=true)
 
@@ -42,10 +46,11 @@ nuget パッケージの管理形式は、Package.config ではなく、PackageR
 
 GitHub Actions は、YAML 構文を使用してイベント、ジョブ、およびステップを定義しています。
 
-この YAML ファイルは、コードリポジトリの .github/workflows というディレクトリに保存することで、動作の対象になります。
+この YAML ファイルを、コードリポジトリの .github/workflows というディレクトリに保存することで、動作の対象になります。
+ファイル名は何でも構いません。
 
-ファイルの内容は以下になります。適宜コメントで説明しています。
-やっていることを要約すると、msbuild を使って対象のプロジェクトファイルをビルドしています。
+ファイルの内容は以下になります。適宜コメントアウトで説明しています。
+やっていることを要約すると、MSBuild を使って対象のプロジェクトファイルをビルドしています。
 
 ```yml
 # このワークフローの名前（バッジを作るときなどに使う）
@@ -54,8 +59,8 @@ name: Build Grasshopper Plugin
 on:
   push: # develop にプッシュしたときに動く
     branches: [develop]
-  pull_request: # main にプルリクしたときに動く
-    branches: [main]
+  pull_request: # main と develop にプルリクしたときに動く
+    branches: [main, develop]
 
 jobs:
   build:
@@ -64,11 +69,11 @@ jobs:
     runs-on: windows-latest # windows-2019 でも同じ意味
 
     steps:
-      # git のチェックアウトを行い、この環境に対象のリポを取得する
+      # git のチェックアウトを行い、環境に対象のリポのデータを取得する
       - name: Checkout
         uses: actions/checkout@v2
 
-      # Vusial Studio のセットアップをする
+      # Vusial Studio (MSBuild)のセットアップをする
       - name: Setup MSBuild.exe
         uses: microsoft/setup-msbuild@v1
 
@@ -82,6 +87,7 @@ jobs:
         run: msbuild /t:Restore /p:Configuration=Release
 
       # Build 実行
+      # 対象はリリースビルド
       - name: Build the application
         run: msbuild /p:Configuration=Release
 
@@ -105,7 +111,7 @@ jobs:
 
 # バッジを付ける
 
-結果をバッジとして取得できます。これを使うことで整備されたリポジトリのような気持ちになれます。
+Github Actions の結果をバッジとして取得できます。これを README に張り付けることで整備されたリポジトリのような気持ちになれます。
 
 バッジの作成には [shields.io](https://shields.io/category/build) というサービスを使うと便利です。以下のようにリポの情報を入れると自動で情報を取得してバッジを作成してくれます。
 
@@ -116,5 +122,6 @@ jobs:
 # 参考リポジトリ
 
 この内容は以下のリポで環境構築しています。参考にしてください。
+ちなみにいろんな CI が動いてどんなことが出力されるかわかるように、ここではビルドは失敗させてます。
 
 [GrasshopperCISample](https://github.com/hrntsm/GrasshopperCISample)
