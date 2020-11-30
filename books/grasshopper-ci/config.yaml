@@ -8,6 +8,6 @@ chapters:
   - build-with-github-actions
   - code-quality
   - code-maintenace
-  - add-github-pages
   - add-batch
+  - add-github-pages
   - reference
