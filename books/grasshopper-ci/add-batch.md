@@ -21,13 +21,13 @@ Codacy
 
 対象の Codacy のページに行き Settings の General から Codacy Badge の箇所で取得できます。
 
-![](https://github.com/hrntsm/zenn_articles/blob/master/image/CodacyBatch.png?raw=true)
+![](https://github.com/hrntsm/zenn_articles/blob/master/books/grasshopper-ci/image/CodacyBatch.png?raw=true)
 
 # Code Climate の結果のバッジを取得する
 
 対象の Code Climate のページに行き Repo Settings の Badges から Maintainability Badge の箇所で取得できます。
 
-![](https://github.com/hrntsm/zenn_articles/blob/master/image/ClimateBadge.png?raw=true)
+![](https://github.com/hrntsm/zenn_articles/blob/master/books/grasshopper-ci/image/ClimateBadge.png?raw=true)
 
 # 結果
 
