@@ -1,5 +1,5 @@
 ---
-title: "Github Action を使った Grasshopper コンポーネントのビルドの仕方"
+title: "Github Actions を使った Grasshopper コンポーネントのビルドの仕方"
 emoji: "🦏"
 type: "tech" # tech: 技術記事 / idea: アイデア
 topics: ["grasshopper", "github"]
@@ -11,6 +11,7 @@ published: false
 この記事は、[AEC and Related Tech Advent Calendar 2020](https://adventar.org/calendars/5473) の 1 日目の記事です。建築関連のことならば技術記事に限らずなんでも OK のアドカレになっていますので興味のある方はみてください!
 
 ここでは、建築系で設計検討に最近使われている Grasshopper というソフトで動作するコンポーネント（プラグイン）を、Github Actions を使ってビルドする方法についてを紹介します。
+要は、.NET Framework を Github Actions で使ってビルドする方法になります。
 
 ## GitHub Actions とは
 
