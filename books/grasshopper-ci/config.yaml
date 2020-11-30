@@ -1,5 +1,5 @@
-title: "Grasshopperコンポーネント開発でCIを使ってみよう！！"
-summary: "Grasshopperコンポーネントの開発を例にとってCIを使った開発について紹介します。"
+title: "Github と CI を使った Grasshopper コンポーネント開発！！"
+summary: "Grasshopperコンポーネントの開発を例にとって Github のいろんな機能を使った開発について紹介します。"
 topics: ["github", "grasshopper", "csharp"]
 published: false
 price: 0 
@@ -7,5 +7,7 @@ chapters:
   - intro
   - build-with-github-actions
   - code-quality
+  - code-maintenace
+  - add-github-pages
   - add-batch
   - reference
