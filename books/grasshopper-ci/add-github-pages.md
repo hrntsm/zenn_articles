@@ -12,7 +12,7 @@ Github Pages をつかうと簡単にサイトが作成できます。
 Github の対象のリポの Settings を開きます。
 スクロールして下のほうに行くと Github Pages という欄があります。そこで以下のように設定してください。
 
-![](https://github.com/hrntsm/zenn_articles/blob/master/image/Pages.png?raw=true)
+![](https://github.com/hrntsm/zenn_articles/blob/master/books/grasshopper-ci/image/Pages.png?raw=true)
 
 次にその下の Theme Chooser の部分の Choose a Theme を選択すると、作成するページのテーマが選べます。
 好きなものを選んでください。
@@ -20,7 +20,7 @@ Github の対象のリポの Settings を開きます。
 そうすると裏で CI が走って、docs/index.md の内容をもとにページが作成されます。
 作成されたページはリポの右にある Environments からアクセスできます。
 
-![](https://github.com/hrntsm/zenn_articles/blob/master/image/environment.png?raw=true)
+![](https://github.com/hrntsm/zenn_articles/blob/master/books/grasshopper-ci/image/environment.png?raw=true)
 
 ページの URL は以下のルールで作成されます。
 
