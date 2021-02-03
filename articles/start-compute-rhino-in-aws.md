@@ -3,7 +3,7 @@ title: "AWSでできる！クラウドでのジオメトリ計算サービスCom
 emoji: "🦏"
 type: "tech" # tech: 技術記事 / idea: アイデア
 topics: ["rhinoceros", "aws"]
-published: true
+published: false
 ---
 
 以下に移動しました。
