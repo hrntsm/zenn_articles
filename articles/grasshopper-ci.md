@@ -3,7 +3,7 @@ title: "Github Actions を使った Grasshopper コンポーネントのビル�
 emoji: "🦏"
 type: "tech" # tech: 技術記事 / idea: アイデア
 topics: ["grasshopper", "github", "githubactions"]
-published: true
+published: false
 ---
 
 
